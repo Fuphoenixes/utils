@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		body{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 500px;
+			height: 500px;
+			background: red;
+			text-align: center;
+			line-height: 500px;
+			font-size: 40px;
+			color: #fff;
+		}
+		.full-screen{
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">正</div>
+</body>
+<script type="text/javascript" src="./fullScreen.js"></script>
+<script type="text/javascript" src="./index.js"></script>
+<script type="text/javascript">
+	
+	var oBox = document.querySelector('.box');
+	oBox.addEventListener('click',function () {
+		var isFullScreen=!!(document.webkitIsFullScreen || document.mozFullScreen ||
+			document.msFullscreenElement || document.fullscreenElement
+		);
+		if(isFullScreen){
+			oBox.className = 'box';
+			exitFullscreen();
+		}else{
+			oBox.className = 'box full-screen';
+			toFullScreen();
+		}
+	});
+	
+	window.addEventListener('resize',function () {
+		var isFull=!!(document.webkitIsFullScreen || document.mozFullScreen ||
+			document.msFullscreenElement || document.fullscreenElement
+		);
+		if(!isFull){
+			oBox.className = 'box';
+		}
+	});
+
+	window.addEventListener('orientationchange',function(){
+		window.orientation
+	},false);
+	
+</script>
+</html>

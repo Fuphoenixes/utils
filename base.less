@@ -1,0 +1,98 @@
+//rem配置
+@rem:100rem;
+
+//移动端1像素处理
+.pixel (@type){
+  @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
+    transform:~"@{type}(0.7)";    //1.5 * 0.7接近1
+  }
+  @media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
+    transform:~"@{type}(0.5)";    //2 * 0.5 = 1
+  }
+  @media (-webkit-min-device-pixel-ratio: 2.5),(min-device-pixel-ratio: 2.5) {
+    transform:~"@{type}(0.4)";    //2.5 * 0.4 = 1
+  }
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
+    transform:~"@{type}(0.333)";    //3 * 0.333 接近 1
+  }
+  @media (-webkit-min-device-pixel-ratio: 3.5),(min-device-pixel-ratio: 3.5) {
+    transform:~"@{type}(0.2857)";    //3.5 * 0.2857 接近 1
+  }
+}
+
+.border-direction{
+  position: absolute;
+  display: block;
+  content: '';
+  z-index: 1;
+  box-sizing: content-box !important;
+}
+
+.border-1px-top(@color:#ccc) {
+  position:relative;
+  &::after{
+    .border-direction;
+    .pixel(scaleY);
+    border-top: 1px solid @color;
+    transform-origin: 0 0;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+}
+
+.border-1px-bottom(@color:#ccc) {
+  position:relative;
+  &::after{
+    .border-direction;
+    .pixel(scaleY);
+    border-top: 1px solid @color;
+    transform-origin: 0 100%;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.border-1px-left(@color:#ccc) {
+  position:relative;
+  &::after{
+    .border-direction;
+    .pixel(scaleX);
+    border-left: 1px solid @color;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 100%;
+    top:0;
+    left:0;
+  }
+}
+
+.border-1px-right(@color:#ccc) {
+  position:relative;
+  &::after{
+    .border-direction;
+    .pixel(scaleX);
+    border-left: 1px solid @color;
+    transform-origin:100% 0;
+    width: 1px;
+    height: 100%;
+    top:0;
+    right:0;
+  }
+}
+
+// 不换行,...形式处理多余文字，默认单行
+.no-wrap (@row:1) when (@row = 1) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.no-wrap (@row:1) when (@row > 1) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @row;
+  overflow: hidden;
+}
