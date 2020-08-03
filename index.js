@@ -55,3 +55,8 @@ function $params(obj) {
 	}
 	return str.join('&');
 };
+
+/*
+* 保留两位小数正则
+* replace(/\.0{2}|(?<=\.\d)0$/g,'')
+* */
